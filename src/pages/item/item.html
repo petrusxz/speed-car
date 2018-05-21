@@ -1,0 +1,44 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Item</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <div margin-vertical class="avatar">
+    <img [src]="item.picture ? sanitizer.bypassSecurityTrustUrl(item.picture) : 'assets/imgs/car-repair.png'">
+    <ion-fab top center [hidden]="itemParams">
+      <button ion-fab mini color="primary" (click)="inputFile.click()">
+        <ion-icon name="ios-camera"></ion-icon>
+      </button>
+      <input hidden #inputFile type="file" (change)="openFileChooser($event)" />
+    </ion-fab>
+  </div>
+
+  <ion-list no-margin>
+
+    <ion-item>
+      <ion-label floating>Descrição</ion-label>
+      <ion-input type="text" [disabled]="itemParams" [(ngModel)]="item.description"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Preço</ion-label>
+      <ion-input type="tel" maxLength="8" price [disabled]="itemParams" [value]="item.price" (keyup)="item.price = $event.target.value"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Validade</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" [disabled]="itemParams" [(ngModel)]="item.expirationDate"></ion-datetime>
+    </ion-item>
+
+  </ion-list>
+
+  <div margin-top padding-horizontal [hidden]="itemParams">
+    <button ion-button block color="primary" (click)="saveItem(item)">Salvar</button>
+  </div>
+
+</ion-content>
